@@ -279,19 +279,6 @@ class ModCommand(commands.Cog):
         )
         await inter.response.send_message(embed=emb,components=[disnake.ui.Button(style=disnake.ButtonStyle.red,label="CONFIRM")])
 
-    async def role_autocomplete(self, inter: disnake.ApplicationCommandInteraction, string: str):
-        # Filter the roles to only those whose ID is in the whitelist
-        filtered_roles = [
-            role for role in inter.guild.roles 
-            if role.id in variables.mod_edit_roles and string.lower() in role.name.lower()
-        ]
-        
-        # Return the filtered roles as options for autocomplete
-        return [disnake.OptionChoice(name=role.name, value=role.id) for role in filtered_roles]
-
-    def role_list(self):
-        return [disnake.OptionChoice(name=role.name,value=role.id) for role in self.bot.guild.roles if role.id in variables.mod_edit_roles]
-
     @mod.sub_command("role","grants or removes a (non-vital) role")
     async def role(
         self,
